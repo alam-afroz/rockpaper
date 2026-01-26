@@ -13,79 +13,113 @@ let getComputerChoice = function () {
   }
 };
 
-const getHumanChoice = function () {
-  let choice = prompt("Choose between 🪨Rock ,📃Paper and ✂️Scissor");
-  if (choice.toLowerCase() === "rock") {
-    return "Rock";
-  } else if (choice.toLowerCase() === "paper") {
-    return "Paper";
-  } else if (choice.toLowerCase() === "scissor") {
-    return "Scissor";
-  }
-};
+//getting methods
+let h1 = document.querySelector(".start");
+let choice1 = document.querySelector(".choice1");
+let choice2 = document.querySelector(".choice2");
+let you = document.querySelector("#player");
+let oppo = document.querySelector("#oppo");
 
-const playGame = function () {
-  let humanScore = 0;
-  let computerScore = 0;
-  const playRound = function (humanChoice, computerChoice) {
-    console.log("your choice:", humanChoice);
-    console.log("computer's choice:", computerChoice);
+let humanScore = 0;
+let oppoScore = 0;
+function myScore() {
+  humanScore == humanScore++;
+  you.textContent = humanScore;
+}
+function playRound(humanChoice, computerChoice) {
+  choice1.textContent = ("your choice:", humanChoice);
+  choice2.textContent = ("computer's choice:", computerChoice);
+  while (humanScore != 5 || oppoScore != 5) {
+    if (humanScore > 4) {
+      h1.textContent = "You Won The Game";
+      choice1.textContent = "";
+      choice2.textContent = "";
+      break;
+    }
+    if (oppoScore > 4) {
+      h1.textContent = "You lose the Game";
+      choice1.textContent = "";
+      choice2.textContent = "";
+      break;
+    }
     if (
       humanChoice.toLowerCase() === "rock" &&
       computerChoice.toLowerCase() === "paper"
     ) {
-      console.log("You lose this round,Paper beats Rock");
-      return 0;
+      h1.textContent = "You lose this round,Paper beats Rock";
+      oppoScore == oppoScore++;
+
+      oppo.textContent = oppoScore;
+      return oppoScore;
     } else if (
       humanChoice.toLowerCase() === "rock" &&
       computerChoice.toLowerCase() === "scissor"
     ) {
-      console.log("You won this round,Rock beats Scissor");
+      h1.textContent = "You won this round,Rock beats Scissor ";
+      myScore();
       return 1;
     } else if (
       humanChoice.toLowerCase() === "paper" &&
       computerChoice.toLowerCase() === "rock"
     ) {
-      console.log("You won this round,Paper beats Rock");
+      h1.textContent = "You won this round,Paper beats Rock";
+      myScore();
       return 1;
     } else if (
       humanChoice.toLowerCase() === "paper" &&
       computerChoice.toLowerCase() === "scissor"
     ) {
-      console.log("You lose this round,Scissor beats Paper");
-      return 0;
+      h1.textContent = "You lose this round,Scissor beats Paper";
+      oppoScore == oppoScore++;
+      console.log(oppoScore);
+      oppo.textContent = oppoScore;
+      return oppoScore;
     } else if (
       humanChoice.toLowerCase() === "scissor" &&
       computerChoice.toLowerCase() === "paper"
     ) {
-      console.log("You won this round,Scissor beats Paper");
+      h1.textContent = "You won this round,Scissor beats Paper";
+      myScore();
       return 1;
     } else if (
       humanChoice.toLowerCase() === "scissor" &&
       computerChoice.toLowerCase() === "rock"
     ) {
-      console.log("You lose this round,Rock beats Scissor");
-      return 0;
+      h1.textContent = "You lose this round,Rock beats Scissor";
+      oppoScore == oppoScore++;
+
+      oppo.textContent = oppoScore;
+      return oppoScore;
     } else {
-      console.log("A Tie");
+      h1.textContent = "A Tie";
       return 2;
     }
-  };
-
-  for (let i = 0; i < 5; i++) {
-    const rounds = playRound(getHumanChoice(), getComputerChoice());
-    if (rounds === 0) {
-      computerScore = ++computerScore;
-    }
-    if (rounds === 1) {
-      humanScore = ++humanScore;
-    } else {
-      humanScore = humanScore;
-      computerScore = computerScore;
-    }
-    console.log("HumanScore=", humanScore);
-    console.log("ComputerScore=", computerScore);
-    console.log("   <==Round Over==>   ");
   }
-};
-playGame();
+}
+
+const rock = document.querySelector(".rock");
+rock.addEventListener("click", () => {
+  playRound("rock", getComputerChoice());
+});
+const paper = document.querySelector(".paper");
+paper.addEventListener("click", () => {
+  playRound("paper", getComputerChoice());
+});
+const scissor = document.querySelector(".scissor");
+scissor.addEventListener("click", () => {
+  playRound("scissor", getComputerChoice());
+});
+
+const restart = document.querySelector(".restart");
+
+function toRestart() {
+  h1.textContent = "START GAME";
+  humanScore = 0;
+  oppoScore = 0;
+
+  you.textContent = "0";
+  oppo.textContent = "0";
+  choice1.textContent = "Your Choice";
+  choice2.textContent = "Opponent Choice";
+}
+restart.addEventListener("click", toRestart);
